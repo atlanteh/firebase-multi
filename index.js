@@ -21,16 +21,19 @@ const subparsers = parser.addSubparsers({
     dest: 'action',
 })
 
-const setParser = subparsers.addParser('set', {addHelp: true})
+const setParser = subparsers.addParser('set', {addHelp: true, description: 'Add or update a ci token to be used for a specific project'})
 setParser.addArgument('project', {help: 'The firebase project'})
 setParser.addArgument('token', {help: 'The ci token obtained from `firebase login:ci`'})
 
-const getParser = subparsers.addParser('get', {addHelp: true})
+const getParser = subparsers.addParser('get', {addHelp: true, description: 'Print the stored ci token for the specified project'})
 getParser.addArgument('project', {help: 'The firebase project'})
 
-const useParser = subparsers.addParser('use', {addHelp: true, })
+const unsetParser = subparsers.addParser('unset', {addHelp: true, description: 'Remove the stored ci token for the specified project'})
+unsetParser.addArgument('project', {help: 'The firebase project'})
+
+const useParser = subparsers.addParser('use', {addHelp: true, description: 'Set FIREBASE_TOKEN env param with the stored ci token, and run the specified command'})
 useParser.addArgument('project', {help: 'The firebase project'})
-useParser.addArgument('..rest', {nargs: Const.REMAINDER})
+useParser.addArgument('command', {nargs: Const.REMAINDER, help: 'Command to run after FIREBASE_TOKEN env param set'})
 
 
 const {project, token, action} = parser.parseArgs();
@@ -47,6 +50,9 @@ case 'get':
     break;
 case 'set':
     invokeSet();
+    break;
+case 'unset':
+    invokeUnset();
     break;
 case 'use':
     invokeUse();
@@ -68,6 +74,11 @@ function invokeGet() {
 
 function invokeSet() {
     store.projects[project] = token;
+    fs.writeFileSync(storeLocation, JSON.stringify(store, null, 2), 'utf8')
+}
+
+function invokeUnset() {
+    delete store.projects[project];
     fs.writeFileSync(storeLocation, JSON.stringify(store, null, 2), 'utf8')
 }
 
