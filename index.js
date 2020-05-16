@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 const {ArgumentParser, Const} = require('argparse');
-const os = require('os');
-const path = require('path');
-const fs = require('fs');
 const crossEnv = require('cross-env');
+const Configstore = require('configstore');
+const packageJson = require('./package.json');
 
-const storeLocation = path.normalize(os.homedir() + '/.config/configstore/multi-login.json');
+const store = new Configstore(packageJson.name, {projects: {}, version: 1});
 
 const parser = new ArgumentParser({
-    version: '0.0.1',
+    version: packageJson.version,
     addHelp: true,
     prog: 'firebase-multi',
     description: 'firebase-multi supports running multiple projects from multiple accounts on one machine, leveraging `firebase login:ci`',
@@ -38,12 +37,6 @@ useParser.addArgument('command', {nargs: Const.REMAINDER, help: 'Command to run 
 
 const {project, token, action} = parser.parseArgs();
 
-let store = {projects: {}, version: 1};
-if (fs.existsSync(storeLocation)) {
-    const str = fs.readFileSync(storeLocation, 'utf8');
-    store = JSON.parse(str);
-}
-
 switch (action) {
 case 'get':
     invokeGet();
@@ -63,7 +56,7 @@ default:
 }
 
 function invokeGet() {
-    const token = store.projects[project];
+    const token = store.get(`projects.${project}`);
     if (token) {
         console.log(token);
     } else {
@@ -73,17 +66,15 @@ function invokeGet() {
 }
 
 function invokeSet() {
-    store.projects[project] = token;
-    fs.writeFileSync(storeLocation, JSON.stringify(store, null, 2), 'utf8')
+    store.set(`projects.${project}`, token)
 }
 
 function invokeUnset() {
-    delete store.projects[project];
-    fs.writeFileSync(storeLocation, JSON.stringify(store, null, 2), 'utf8')
+    store.delete(`projects.${project}`)
 }
 
 function invokeUse() {
-    const token = process.env.FIREBASE_TOKEN || store.projects[project];
+    const token = process.env.FIREBASE_TOKEN || store.get(`projects.${project}`);
     if (!token) {
         console.error(`Error: No token for project ${project}. Use command 'firebase-multi set <project> <token>'`)
         process.exit(1);
