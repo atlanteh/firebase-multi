@@ -1,0 +1,16 @@
+{
+  "name": "firebase-multi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": ["multiple firebase login"],
+  "author": "Roi Nagar",
+  "license": "MIT",
+  "bin": {
+    "firebase-multi": "./index.js"
+  },
+  "dependencies": {
+    "argparse": "^1.0.10",
+    "cross-env": "^7.0.2"
+  }
+}
