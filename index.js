@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const {ArgumentParser, Const} = require('argparse');
+const {ArgumentParser, Const, RawTextHelpFormatter} = require('argparse');
 const crossEnv = require('cross-env');
 const Configstore = require('configstore');
 const packageJson = require('./package.json');
@@ -10,14 +10,22 @@ const parser = new ArgumentParser({
     version: packageJson.version,
     addHelp: true,
     prog: 'firebase-multi',
-    description: 'firebase-multi supports running multiple projects from multiple accounts on one machine, leveraging `firebase login:ci`',
+    formatterClass: RawTextHelpFormatter,
+    description: 'firebase-multi supports running multiple projects from multiple accounts on one machine, leveraging `firebase login:ci`'
 });
 
 const subparsers = parser.addSubparsers({
-    set: 'Add/Update project',
+    title: 'Commands',
+    set: 'Add/Update a project token',
     get: 'Print token for project',
     use: 'Invoke a command with project token',
+    unset: 'Delete stored token',
     dest: 'action',
+    description:
+        'set        Add/Update project \n' +
+        'get        Print token for project \n' +
+        'use        Invoke a command with a project token \n' +
+        'unset      Delete stored token',
 })
 
 const setParser = subparsers.addParser('set', {addHelp: true, description: 'Add or update a ci token to be used for a specific project'})

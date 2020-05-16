@@ -17,6 +17,7 @@ Supported Commands
 `set <firebase-project> <ci token>` - Saves the specified token for the specified firebase-project
 `get <firebase-project>` - Prints the token for the specified firebase-project
 `use <firebase-project> <command>` - set FIREBASE_TOKEN env with the project token and run the command. If FIREBASE_TOKEN is already set, this command won't override it.
+`unset <firebase-project>` - deletes the stored token for the specified project.
 
 License
 -------
