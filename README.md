@@ -1,3 +1,6 @@
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/atlanteh/firebase-multi)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/atlanteh/firebase-multi/npm-publish)
+
 firebase-multi
 ========
 
