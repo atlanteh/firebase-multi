@@ -22,10 +22,11 @@ const subparsers = parser.addSubparsers({
     unset: 'Delete stored token',
     dest: 'action',
     description:
-        'set        Add/Update project \n' +
-        'get        Print token for project \n' +
-        'use        Invoke a command with a project token \n' +
-        'unset      Delete stored token',
+        'set        Add / Update the token for the specified firebase-project \n' +
+        'get        Prints the token for the specified firebase-project \n' +
+        'use        Invoke a command with a project token after setting the FIRE_BASE_TOKEN \n' +
+        '           If FIREBASE_TOKEN is already set, this command won\'t override it\n' +
+        'unset      Deletes the stored token for the specified project',
 })
 
 const setParser = subparsers.addParser('set', {addHelp: true, description: 'Add or update a ci token to be used for a specific project'})
