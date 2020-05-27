@@ -5,30 +5,51 @@ Firebase CLI multiple login helper. Supports running multiple projects of differ
 
 **NOTE: This module will have direct access to your Firebase API Token.**
 
-For a _safer_ installtion can be achieved by using a git url, after you've reviewed the code.
-- v0.1.2 :: 0154b2c9b902fc89868b63b6e953390a97b6139e :: https://github.com/atlanteh/firebase-multi/tree/0154b2c9b902fc89868b63b6e953390a97b6139e)
-- v0.1.1 :: f63613168b52b5914ffc60288af089239b80e6e1 :: https://github.com/atlanteh/firebase-multi/commit/f63613168b52b5914ffc60288af089239b80e6e1
+A _safer_ installation can be achieved by using a git url, after you've reviewed the code.
+- v0.1.3 :: https://github.com/atlanteh/firebase-multi/tree/v0.1.3
 
 To install the trusted commit:
 ```
-# "<commit-hash>" would be replaced with the 12 alpha-numeric hash
-npm i -g https://github.com/atlanteh/firebase-multi.git#<commit-hash>
+npm i -g atlanteh/firebase-multi0#v0.1.3
+# or
+yarn global add atlanteh/firebase-multi0#v0.1.3
+```
+
+Alternatively you can use npm:
+```
+npm i -g firebase-multi
+# or
+yarn global add firebase-multi
 ```
 
 Usage
 -------
 
-1. Install this module globally using the **safe approach, described above**. Alternatively, by running `yarn add -g firebase-multi` or `npm i -g firebase-multi`.
-2. Run `firebase login:ci` and complete login flow until you get the firebase ci token in your terminal.
-3. Run `firebase-multi set <your-project> <firebase-ci-token>`
-4. Run in terminal/package.json script: `firebase-multi use <your-project> firebase deploy`
+1. Run `firebase login:ci` and complete login flow until you get the firebase ci token in your terminal.
+2. Run `firebase-multi set <your-project> <firebase-ci-token>`
+3. Run in terminal/package.json script: `firebase-multi use <your-project> firebase deploy`
 
 Supported Commands
 -------
-`set <firebase-project> <ci token>` - Saves the specified token for the specified firebase-project
-`get <firebase-project>` - Prints the token for the specified firebase-project
-`use <firebase-project> <command>` - set FIREBASE_TOKEN env with the project token and run the command. If FIREBASE_TOKEN is already set, this command won't override it.
-`unset <firebase-project>` - deletes the stored token for the specified project.
+
+```
+usage: firebase-multi [-h] [-v] {set,get,unset,use} ...
+
+firebase-multi supports running multiple projects from multiple accounts on one machine, leveraging `firebase login:ci`
+
+Optional arguments:
+  -h, --help           Show this help message and exit.
+  -v, --version        Show program's version number and exit.
+
+Commands:
+  set        Add / Update the token for the specified firebase-project
+  get        Prints the token for the specified firebase-project
+  use        Invoke a command with a project token after setting the FIRE_BASE_TOKEN.
+             If FIREBASE_TOKEN is already set, this command won't override it.
+  unset      Deletes the stored token for the specified project.
+
+  {set,get,unset,use}
+```
 
 License
 -------
