@@ -1,3 +1,6 @@
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/atlanteh/firebase-multi)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/atlanteh/firebase-multi/npm-publish)
+
 firebase-multi
 ========
 
@@ -44,9 +47,9 @@ Optional arguments:
 Commands:
   set        Add / Update the token for the specified firebase-project
   get        Prints the token for the specified firebase-project
-  use        Invoke a command with a project token after setting the FIRE_BASE_TOKEN.
-             If FIREBASE_TOKEN is already set, this command won't override it.
-  unset      Deletes the stored token for the specified project.
+  use        Invoke a command with a project token after setting the FIRE_BASE_TOKEN
+             If FIREBASE_TOKEN is already set, this command won't override it
+  unset      Deletes the stored token for the specified project
 
   {set,get,unset,use}
 ```
